@@ -19,6 +19,7 @@ export const LoginForm: React.FC = () => {
       setCookie(null, '_token', token, {
         path: '/',
       });
+      location.href = '/dashboard';
     } catch (err) {
       console.warn('LoginForm', err);
 
