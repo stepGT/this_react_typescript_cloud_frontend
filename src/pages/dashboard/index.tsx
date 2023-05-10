@@ -3,12 +3,19 @@ import { checkAuth } from '@/utils/checkAuth';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import { ReactNode } from 'react';
 import styles from '@/styles/Home.module.scss';
-import { Button, Menu } from 'antd';
+import { Menu } from 'antd';
 import { DeleteOutlined, FileImageOutlined, FileOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { UploadButton } from '@/components/UploadButton';
+import * as Api from '@/api';
+import { IFileItem } from '@/api/dto/files.dto';
+import { FileList } from '@/components/FileList';
 
-const DashboardPage: NextPage = () => {
+interface Props {
+  items: IFileItem[];
+}
+
+const DashboardPage: NextPage<Props> = ({ items }) => {
   const router = useRouter();
   const selectedMenu = router.pathname;
   return (
@@ -42,7 +49,7 @@ const DashboardPage: NextPage = () => {
         />
       </div>
       <div className="container">
-        <h1>Files</h1>
+        <h1><FileList items={items} /></h1>
       </div>
     </main>
   );
@@ -60,13 +67,17 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   try {
+    const items = await Api.files.getAll();
+    //
     return {
-      props: {},
+      props: {
+        items,
+      },
     };
   } catch (err) {
     console.log(err);
     return {
-      props: {},
+      props: { items: [] },
     };
   }
 };
