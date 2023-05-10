@@ -2,7 +2,6 @@ import { Layout } from '@/layouts/Layout';
 import { checkAuth } from '@/utils/checkAuth';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import { ReactNode } from 'react';
-import { useRouter } from 'next/router';
 import * as Api from '@/api';
 import { IFileItem } from '@/api/dto/files.dto';
 import { FileList } from '@/components/FileList';
@@ -12,9 +11,7 @@ interface IProps {
   items: IFileItem[];
 }
 
-const DashboardPage: NextPage<IProps> = ({ items }) => {
-  const router = useRouter();
-  const selectedMenu = router.pathname;
+const DashboardTrash: NextPage<IProps> = ({ items }) => {
   return (
     <DashboardLayout>
       <FileList items={items} />
@@ -22,7 +19,7 @@ const DashboardPage: NextPage<IProps> = ({ items }) => {
   );
 };
 
-DashboardPage.getLayout = (page: ReactNode) => {
+DashboardTrash.getLayout = (page: ReactNode) => {
   return <Layout title="Dashboard / Главная">{page}</Layout>;
 };
 
@@ -34,7 +31,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   try {
-    const items = await Api.files.getAll();
+    const items = await Api.files.getAll('trash');
     //
     return {
       props: {
@@ -49,4 +46,4 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 };
 
-export default DashboardPage;
+export default DashboardTrash;
