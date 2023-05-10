@@ -2,7 +2,6 @@ import { Layout } from '@/layouts/Layout';
 import { checkAuth } from '@/utils/checkAuth';
 import { GetServerSidePropsContext, NextPage } from 'next';
 import { ReactNode } from 'react';
-import { useRouter } from 'next/router';
 import * as Api from '@/api';
 import { IFileItem } from '@/api/dto/files.dto';
 import { FileList } from '@/components/FileList';
@@ -13,8 +12,6 @@ interface IProps {
 }
 
 const DashboardPage: NextPage<IProps> = ({ items }) => {
-  const router = useRouter();
-  const selectedMenu = router.pathname;
   return (
     <DashboardLayout>
       <FileList items={items} />
