@@ -4,8 +4,9 @@ import { GetServerSidePropsContext, NextPage } from 'next';
 import { ReactNode } from 'react';
 import * as Api from '@/api';
 import { IFileItem } from '@/api/dto/files.dto';
-import { FileList } from '@/components/FileList';
 import { DashboardLayout } from '@/layouts/DashboardLayout';
+import { FileActions } from '@/components/FileActions';
+import { Files } from '@/modules/Files';
 
 interface IProps {
   items: IFileItem[];
@@ -14,7 +15,7 @@ interface IProps {
 const DashboardPage: NextPage<IProps> = ({ items }) => {
   return (
     <DashboardLayout>
-      <FileList items={items} />
+      <Files items={items} withActions />
     </DashboardLayout>
   );
 };
