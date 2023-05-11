@@ -4,23 +4,22 @@ import { GetServerSidePropsContext, NextPage } from 'next';
 import { ReactNode } from 'react';
 import * as Api from '@/api';
 import { IFileItem } from '@/api/dto/files.dto';
+import { FileList } from '@/components/FileList';
 import { DashboardLayout } from '@/layouts/DashboardLayout';
-import { FileActions } from '@/components/FileActions';
-import { Files } from '@/modules/Files';
 
 interface IProps {
   items: IFileItem[];
 }
 
-const DashboardPage: NextPage<IProps> = ({ items }) => {
+const DashboardPhotos: NextPage<IProps> = ({ items }) => {
   return (
     <DashboardLayout>
-      <Files items={items} withActions />
+      <FileList items={items} />
     </DashboardLayout>
   );
 };
 
-DashboardPage.getLayout = (page: ReactNode) => {
+DashboardPhotos.getLayout = (page: ReactNode) => {
   return <Layout title="Dashboard / Главная">{page}</Layout>;
 };
 
@@ -32,7 +31,7 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 
   try {
-    const items = await Api.files.getAll();
+    const items = await Api.files.getAll('photos');
     //
     return {
       props: {
@@ -47,4 +46,4 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   }
 };
 
-export default DashboardPage;
+export default DashboardPhotos;
