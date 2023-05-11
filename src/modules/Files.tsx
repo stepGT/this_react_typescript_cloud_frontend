@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { IFileItem } from '@/api/dto/files.dto';
 import { FileActions } from '@/components/FileActions';
-import { FileList } from '@/components/FileList';
+import { FileList, FileSelectType } from '@/components/FileList';
 import { Empty } from 'antd';
 
 import * as Api from '@/api';
@@ -44,7 +44,7 @@ export const Files: FC<FilesProps> = ({ items, withActions }) => {
               isActive={selectedIds.length > 0}
             />
           )}
-          <FileList items={files} />
+          <FileList items={files} onFileSelect={onFileSelect} />
         </>
       ) : (
         <Empty className="empty-block" description="Список файлов пуст" />
